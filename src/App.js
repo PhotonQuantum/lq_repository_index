@@ -1,20 +1,9 @@
-/* eslint-disable react/react-in-jsx-scope */
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import moment from "moment";
-import tw, {GlobalStyles} from 'twin.macro';
+import {GlobalStyles} from 'twin.macro';
 import "tailwindcss/dist/base.min.css"
 import {useRequest} from "@umijs/hooks";
-
-const Container = tw.div`container mx-auto`
-const Title = tw.p`font-sans text-2xl text-center mt-10 mb-6 px-6`
-const Article = tw.article`prose mt-4 mx-auto px-6 md:px-0`
-const Th = tw.th`whitespace-no-wrap`
-const ThCenter = tw(Th)`text-center`;
-const Td = tw.td`whitespace-no-wrap`
-const TdCenter = tw(Td)`text-center`;
-const ScrollContainer = tw.div`overflow-x-auto`
-const Bottom = tw.div`mb-8`;
-const Input = tw.input`border-2 rounded border-solid border-gray-300 hover:border-gray-600 focus:border-gray-600 px-2 py-1 w-full`
+import {Article, Bottom, Container, Input, ScrollContainer, Td, TdCenter, Th, ThCenter, Title} from "./styles";
 
 function App() {
     const {data: packages, loading: pkgLoading} = useRequest("meta.json", {initialData: []});
