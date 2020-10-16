@@ -8,8 +8,8 @@ export const Intro = () => {
     }, [])
     return (
         <>
-            <p>This is my archlinux repository, which contains many packages not provided by official
-                repositories and ArchlinuxCN.</p>
+            <p>This is my personal archlinux repository which contains packages I'm using that are not provided by
+                official repositories or Arch Linux CN Repository.</p>
             <p>You may contact me at <a href={`mailto:${email}`}>{email}</a> if you want to request a new
                 package to be added to this repository, submit a takedown request, or report a bug.</p>
             <p>To use this repository, please add the following lines to <code>/etc/pacman.conf</code>.</p>

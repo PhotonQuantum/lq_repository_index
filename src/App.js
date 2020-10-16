@@ -9,8 +9,10 @@ import {PkgIndex} from "./components/pkg-index";
 
 function App() {
     const {data: lastUpdate, loading: lastLoading} = useRequest("lastupdate",
-        {initialData: 0,
-        formatResult: res => moment(res*1000).fromNow()})
+        {
+            initialData: 0,
+            formatResult: res => moment(res * 1000).fromNow()
+        })
     const [filterName, setFilter] = useState("");
     return (
         <>
