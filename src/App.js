@@ -8,10 +8,26 @@ import {Intro} from "./components/intro";
 import {PkgIndex} from "./components/pkg-index";
 
 function App() {
-    const {data: lastUpdate, loading: lastLoading} = useRequest("lastupdate",
+    const {data: lastUpdate, loading: lastLoading} = useRequest(
+        {
+            url: "lastupdate",
+            method: "get",
+            params: {"ts": Date.now()}
+        },
         {
             initialData: 0,
-            formatResult: res => moment(res * 1000).fromNow()
+            onSuccess: (data, _) => queryFailedPkgs(data[0]),
+            formatResult: res => [res, moment(res * 1000).fromNow()]
+        })
+    const {data: failedPkgs, run: queryFailedPkgs} = useRequest(
+        (date) => ({
+            url: `log/failed.${date}.log`,
+            method: "get"
+        }),
+        {
+            initialData: [],
+            manual: true,
+            formatResult: res => res.trim().split(" ")
         })
     const [filterName, setFilter] = useState("");
     return (
@@ -28,9 +44,11 @@ function App() {
                         setFilter(e.target.value.trim())
                     }}/>
                     <ScrollContainer>
-                        <PkgIndex filterName={filterName}/>
+                        <PkgIndex filterName={filterName} failedPkgs={failedPkgs}/>
                     </ScrollContainer>
-                    <p>Last build task was finished {!lastLoading ? lastUpdate : "N/A"}.</p>
+                    <p>{failedPkgs && "There are failed builds. "}
+                        See <a href={`log/build.${lastUpdate[0]}.log`}>build log</a> for details.</p>
+                    <p>Last build task was finished {!lastLoading ? lastUpdate[1] : "N/A"}.</p>
                 </Article>
                 <Bottom/>
             </Container>

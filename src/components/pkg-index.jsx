@@ -1,10 +1,15 @@
+import React from 'react';
 import {useRequest} from "@umijs/hooks";
 import moment from "moment";
-import {Td, TdCenter, Th, ThCenter} from "../styles";
-import React from "react";
+import {Td, Th, Tr} from "../styles";
 
-export const PkgIndex = ({filterName}) => {
-    const {data, loading} = useRequest("meta.json",
+export const PkgIndex = ({filterName, failedPkgs}) => {
+    const {data, loading} = useRequest(
+        {
+            url: "meta.json",
+            method: "get",
+            params: {"ts": Date.now()}
+        },
         {
             initialData: [],
             formatResult: res => {
@@ -31,15 +36,15 @@ export const PkgIndex = ({filterName}) => {
                 <Th>Name</Th>
                 <Th>Version</Th>
                 <Th>Last Build</Th>
-                <ThCenter>Download</ThCenter>
+                <Th center>Download</Th>
             </tr>
             {!loading ? data.filter(pkg => filterFunc(pkg, filterName)).map((pkg) => (
-                <tr key={pkg.name}>
+                <Tr key={pkg.name} warn={failedPkgs.includes(pkg.name)}>
                     <Td>{pkg.name}</Td>
                     <Td>{pkg.version}</Td>
                     <Td>{pkg.last_build}</Td>
-                    <TdCenter><a href={pkg.filename} target="_blank">Link</a></TdCenter>
-                </tr>
+                    <Td center><a href={pkg.filename} target="_blank">Link</a></Td>
+                </Tr>
             )) : <p>Loading...</p>}
         </table>
     )
