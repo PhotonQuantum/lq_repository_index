@@ -46,7 +46,9 @@ function App() {
                     <ScrollContainer>
                         <PkgIndex filterName={filterName} failedPkgs={failedPkgs}/>
                     </ScrollContainer>
-                    <p>{failedPkgs && "There are failed builds. "}
+                    <p>{failedPkgs && failedPkgs.length
+                    && (failedPkgs.length > 1 || (failedPkgs.length === 1 && failedPkgs[0] !== ""))
+                    ? "There are failed builds. " : "All builds completed successfully. "}
                         See <a href={`log/build.${lastUpdate[0]}.log`}>build log</a> for details.</p>
                     <p>Last build task was finished {!lastLoading ? lastUpdate[1] : "N/A"}.</p>
                 </Article>
