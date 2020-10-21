@@ -39,7 +39,7 @@ export const PkgIndex = ({filterName, failedPkgs}) => {
                 <Th center>Download</Th>
             </tr>
             {!loading ? data.filter(pkg => filterFunc(pkg, filterName)).map((pkg) => (
-                <Tr key={pkg.name} warn={failedPkgs.includes(pkg.name)}>
+                <Tr key={pkg.name} warn={failedPkgs && failedPkgs.includes(pkg.name)}>
                     <Td>{pkg.name}</Td>
                     <Td>{pkg.version}</Td>
                     <Td>{pkg.last_build}</Td>
