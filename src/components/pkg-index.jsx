@@ -43,7 +43,7 @@ export const PkgIndex = ({filterName, failedPkgs}) => {
                     <Td>{pkg.name}</Td>
                     <Td>{pkg.version}</Td>
                     <Td>{pkg.last_build}</Td>
-                    <Td center><a href={pkg.filename} target="_blank">Link</a></Td>
+                    <Td center><a href={`./${pkg.filename}`} target="_blank">Link</a></Td>
                 </Tr>
             )) : <p>Loading...</p>}
         </table>
